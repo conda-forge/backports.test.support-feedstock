@@ -17,6 +17,7 @@ build:
 requirements:
   host:
     - python {{ python_min }}
+    - pip
     - backports
     - setuptools
     - setuptools_scm
@@ -32,11 +33,13 @@ test:
     - backports.test
     - backports.test.support
   commands:
+    - pip check
     - set "PYTHONIOENCODING=utf8"     # [win]
     - export "PYTHONIOENCODING=utf8"  # [unix]
     - python -m unittest discover tests
   requires:
     - mock
+    - pip
     - python {{ python_min }}
 
 about:
