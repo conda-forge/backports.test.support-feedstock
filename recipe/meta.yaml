@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: "0b3735a6de8971154c6fceb565d4a6542605f60267e828b5d6c4a32a312c7f49"
+  sha256: 0b3735a6de8971154c6fceb565d4a6542605f60267e828b5d6c4a32a312c7f49
 
 build:
   noarch: python
   number: 1006
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
