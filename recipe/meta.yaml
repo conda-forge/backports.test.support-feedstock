@@ -6,22 +6,23 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: "0b3735a6de8971154c6fceb565d4a6542605f60267e828b5d6c4a32a312c7f49"
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 0b3735a6de8971154c6fceb565d4a6542605f60267e828b5d6c4a32a312c7f49
 
 build:
   noarch: python
-  number: 1005
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  number: 1006
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
+    - pip
     - backports
     - setuptools
     - setuptools_scm
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - backports
 
 test:
@@ -32,11 +33,14 @@ test:
     - backports.test
     - backports.test.support
   commands:
+    - pip check
     - set "PYTHONIOENCODING=utf8"     # [win]
     - export "PYTHONIOENCODING=utf8"  # [unix]
     - python -m unittest discover tests
   requires:
     - mock
+    - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/pjdelport/backports.test.support
